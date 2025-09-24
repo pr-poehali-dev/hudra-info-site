@@ -9,6 +9,7 @@ import Icon from '@/components/ui/icon';
 function Index() {
   const [activeSection, setActiveSection] = useState('home');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(false);
   const [code, setCode] = useState(`import { hudra } from 'hudra';
 
 const app = hudra({
@@ -43,10 +44,16 @@ app.listen(3000);`);
     { id: 'docs', label: 'Документация', icon: 'FileText' }
   ];
 
+  // Toggle dark mode
+  const toggleDarkMode = () => {
+    setIsDarkMode(!isDarkMode);
+    document.documentElement.classList.toggle('dark', !isDarkMode);
+  };
+
   return (
-    <div className="min-h-screen bg-background">
+    <div className={`min-h-screen bg-background transition-colors duration-300 ${isDarkMode ? 'dark' : ''}`}>
       {/* Navigation */}
-      <nav className="border-b bg-white/80 backdrop-blur-sm sticky top-0 z-50">
+      <nav className="border-b bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm sticky top-0 z-50 transition-colors duration-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center space-x-8">
@@ -69,6 +76,15 @@ app.listen(3000);`);
               </div>
             </div>
             <div className="flex items-center space-x-4">
+              {/* Dark mode toggle */}
+              <button
+                onClick={toggleDarkMode}
+                className="p-2 rounded-lg text-muted-foreground hover:text-foreground hover:bg-accent transition-all duration-300 hover:scale-105"
+                aria-label="Toggle dark mode"
+              >
+                <Icon name={isDarkMode ? "Sun" : "Moon"} size={20} />
+              </button>
+              
               <Button className="hidden md:flex">
                 <Icon name="Star" size={16} className="mr-2" />
                 Star on GitHub
@@ -93,7 +109,7 @@ app.listen(3000);`);
               className="fixed inset-0 bg-black/20 backdrop-blur-sm z-40 animate-fade-in"
               onClick={() => setMobileMenuOpen(false)}
             />
-            <div className="fixed top-16 left-0 right-0 bg-white border-b shadow-lg z-50 animate-slide-down">
+            <div className="fixed top-16 left-0 right-0 bg-white dark:bg-gray-900 border-b shadow-lg z-50 animate-slide-down transition-colors duration-300">
               <div className="px-4 py-6 space-y-4">
                 {navigation.map((item) => (
                   <button
@@ -112,7 +128,14 @@ app.listen(3000);`);
                     <span className="font-medium">{item.label}</span>
                   </button>
                 ))}
-                <div className="pt-4 border-t">
+                <div className="pt-4 border-t space-y-3">
+                  <button
+                    onClick={toggleDarkMode}
+                    className="flex items-center space-x-3 w-full px-4 py-3 rounded-lg text-muted-foreground hover:text-foreground hover:bg-accent transition-all duration-300"
+                  >
+                    <Icon name={isDarkMode ? "Sun" : "Moon"} size={20} />
+                    <span className="font-medium">{isDarkMode ? 'Светлая тема' : 'Темная тема'}</span>
+                  </button>
                   <Button className="w-full">
                     <Icon name="Star" size={16} className="mr-2" />
                     Star on GitHub
@@ -227,7 +250,7 @@ app.listen(3000);`);
                     </div>
                     <div>
                       <h3 className="font-semibold mb-3">Результат</h3>
-                      <div className="bg-muted p-4 rounded-lg min-h-[300px] font-mono text-sm whitespace-pre-wrap">
+                      <div className="bg-muted dark:bg-gray-800/50 p-4 rounded-lg min-h-[300px] font-mono text-sm whitespace-pre-wrap border dark:border-gray-700 transition-colors">
                         {output || 'Нажмите "Запустить" чтобы увидеть результат...'}
                       </div>
                     </div>
@@ -265,7 +288,7 @@ app.listen(3000);`);
                     </div>
                   </CardHeader>
                   <CardContent>
-                    <pre className="bg-muted p-4 rounded-lg overflow-x-auto font-mono text-sm hover:bg-muted/80 transition-colors">
+                    <pre className="bg-muted dark:bg-gray-800/50 p-4 rounded-lg overflow-x-auto font-mono text-sm hover:bg-muted/80 dark:hover:bg-gray-800/70 transition-colors border dark:border-gray-700">
 {`import { hudra } from 'hudra';
 
 const app = hudra();
@@ -302,7 +325,7 @@ app.listen(3000);`}
                     </div>
                   </CardHeader>
                   <CardContent>
-                    <pre className="bg-muted p-4 rounded-lg overflow-x-auto font-mono text-sm hover:bg-muted/80 transition-colors">
+                    <pre className="bg-muted dark:bg-gray-800/50 p-4 rounded-lg overflow-x-auto font-mono text-sm hover:bg-muted/80 dark:hover:bg-gray-800/70 transition-colors border dark:border-gray-700">
 {`import { hudra, ws } from 'hudra';
 
 const app = hudra();
@@ -343,7 +366,7 @@ app.listen(3000);`}
                     </div>
                   </CardHeader>
                   <CardContent>
-                    <pre className="bg-muted p-4 rounded-lg overflow-x-auto font-mono text-sm hover:bg-muted/80 transition-colors">
+                    <pre className="bg-muted dark:bg-gray-800/50 p-4 rounded-lg overflow-x-auto font-mono text-sm hover:bg-muted/80 dark:hover:bg-gray-800/70 transition-colors border dark:border-gray-700">
 {`import { hudra, db } from 'hudra';
 
 const app = hudra();
@@ -385,7 +408,7 @@ app.listen(3000);`}
                     </div>
                   </CardHeader>
                   <CardContent>
-                    <pre className="bg-muted p-4 rounded-lg overflow-x-auto font-mono text-sm hover:bg-muted/80 transition-colors">
+                    <pre className="bg-muted dark:bg-gray-800/50 p-4 rounded-lg overflow-x-auto font-mono text-sm hover:bg-muted/80 dark:hover:bg-gray-800/70 transition-colors border dark:border-gray-700">
 {`import { hudra, auth, jwt } from 'hudra';
 
 const app = hudra();
@@ -446,13 +469,13 @@ app.listen(3000);`}
                         <TabsTrigger value="pnpm">pnpm</TabsTrigger>
                       </TabsList>
                       <TabsContent value="npm">
-                        <pre className="bg-muted p-4 rounded-lg font-mono">npm install hudra</pre>
+                        <pre className="bg-muted dark:bg-gray-800/50 p-4 rounded-lg font-mono border dark:border-gray-700 transition-colors">npm install hudra</pre>
                       </TabsContent>
                       <TabsContent value="yarn">
-                        <pre className="bg-muted p-4 rounded-lg font-mono">yarn add hudra</pre>
+                        <pre className="bg-muted dark:bg-gray-800/50 p-4 rounded-lg font-mono border dark:border-gray-700 transition-colors">yarn add hudra</pre>
                       </TabsContent>
                       <TabsContent value="pnpm">
-                        <pre className="bg-muted p-4 rounded-lg font-mono">pnpm add hudra</pre>
+                        <pre className="bg-muted dark:bg-gray-800/50 p-4 rounded-lg font-mono border dark:border-gray-700 transition-colors">pnpm add hudra</pre>
                       </TabsContent>
                     </Tabs>
                   </div>
@@ -467,7 +490,7 @@ app.listen(3000);`}
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <pre className="bg-muted p-4 rounded-lg font-mono">
+                  <pre className="bg-muted dark:bg-gray-800/50 p-4 rounded-lg font-mono border dark:border-gray-700 transition-colors">
 {`// app.js
 import { hudra } from 'hudra';
 
@@ -492,9 +515,9 @@ app.listen(3000, () => {
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <pre className="bg-muted p-4 rounded-lg font-mono">node app.js</pre>
+                  <pre className="bg-muted dark:bg-gray-800/50 p-4 rounded-lg font-mono border dark:border-gray-700 transition-colors">node app.js</pre>
                   <p className="mt-4 text-muted-foreground">
-                    Откройте браузер и перейдите по адресу <code className="bg-muted px-2 py-1 rounded">http://localhost:3000</code>
+                    Откройте браузер и перейдите по адресу <code className="bg-muted dark:bg-gray-800/50 px-2 py-1 rounded border dark:border-gray-700">http://localhost:3000</code>
                   </p>
                 </CardContent>
               </Card>
