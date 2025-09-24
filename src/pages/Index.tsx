@@ -8,6 +8,7 @@ import Icon from '@/components/ui/icon';
 
 function Index() {
   const [activeSection, setActiveSection] = useState('home');
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [code, setCode] = useState(`import { hudra } from 'hudra';
 
 const app = hudra({
@@ -67,12 +68,60 @@ app.listen(3000);`);
                 ))}
               </div>
             </div>
-            <Button className="hidden md:flex">
-              <Icon name="Star" size={16} className="mr-2" />
-              Star on GitHub
-            </Button>
+            <div className="flex items-center space-x-4">
+              <Button className="hidden md:flex">
+                <Icon name="Star" size={16} className="mr-2" />
+                Star on GitHub
+              </Button>
+              
+              {/* Mobile menu button */}
+              <button
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                className="md:hidden p-2 rounded-lg text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"
+                aria-label="Toggle menu"
+              >
+                <Icon name={mobileMenuOpen ? "X" : "Menu"} size={24} />
+              </button>
+            </div>
           </div>
         </div>
+        
+        {/* Mobile menu overlay */}
+        {mobileMenuOpen && (
+          <div className="md:hidden">
+            <div 
+              className="fixed inset-0 bg-black/20 backdrop-blur-sm z-40 animate-fade-in"
+              onClick={() => setMobileMenuOpen(false)}
+            />
+            <div className="fixed top-16 left-0 right-0 bg-white border-b shadow-lg z-50 animate-slide-down">
+              <div className="px-4 py-6 space-y-4">
+                {navigation.map((item) => (
+                  <button
+                    key={item.id}
+                    onClick={() => {
+                      setActiveSection(item.id);
+                      setMobileMenuOpen(false);
+                    }}
+                    className={`flex items-center space-x-3 w-full px-4 py-3 rounded-lg transition-all duration-300 ${
+                      activeSection === item.id
+                        ? 'bg-primary text-primary-foreground'
+                        : 'text-muted-foreground hover:text-foreground hover:bg-accent'
+                    }`}
+                  >
+                    <Icon name={item.icon} size={20} />
+                    <span className="font-medium">{item.label}</span>
+                  </button>
+                ))}
+                <div className="pt-4 border-t">
+                  <Button className="w-full">
+                    <Icon name="Star" size={16} className="mr-2" />
+                    Star on GitHub
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
       </nav>
 
       {/* Content */}
