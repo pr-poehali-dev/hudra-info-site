@@ -55,7 +55,7 @@ app.listen(3000);`);
                   <button
                     key={item.id}
                     onClick={() => setActiveSection(item.id)}
-                    className={`flex items-center space-x-2 px-3 py-2 rounded-lg transition-colors ${
+                    className={`flex items-center space-x-2 px-3 py-2 rounded-lg transition-all duration-300 hover:scale-105 ${
                       activeSection === item.id
                         ? 'bg-primary text-primary-foreground'
                         : 'text-muted-foreground hover:text-foreground hover:bg-accent'
@@ -78,18 +78,18 @@ app.listen(3000);`);
       {/* Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {activeSection === 'home' && (
-          <div className="space-y-16">
+          <div className="space-y-16 animate-fade-in">
             {/* Hero Section */}
-            <section className="text-center py-16">
+            <section className="text-center py-16 animate-fade-in-up">
               <div className="max-w-4xl mx-auto">
-                <h1 className="text-5xl font-bold mb-6 bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
+                <h1 className="text-5xl font-bold mb-6 bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent animate-bounce-in">
                   HUDRA
                 </h1>
                 <p className="text-xl text-muted-foreground mb-8 leading-relaxed">
                   Современный фреймворк для быстрой разработки веб-приложений с минимальным кодом.
                   Простой синтаксис, максимальная производительность.
                 </p>
-                <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <div className="flex flex-col sm:flex-row gap-4 justify-center animate-scale-in" style={{animationDelay: '0.3s'}}>
                   <Button size="lg" className="text-lg px-8 py-3">
                     <Icon name="Rocket" size={20} className="mr-2" />
                     Начать разработку
@@ -118,7 +118,7 @@ app.listen(3000);`);
                 </CardContent>
               </Card>
 
-              <Card className="hover:shadow-lg transition-shadow">
+              <Card className="hover:shadow-lg transition-all duration-300 hover:scale-105 animate-slide-in-right" style={{animationDelay: '0.2s'}}>
                 <CardHeader>
                   <CardTitle className="flex items-center">
                     <Icon name="Shield" size={24} className="mr-3 text-primary" />
@@ -132,7 +132,7 @@ app.listen(3000);`);
                 </CardContent>
               </Card>
 
-              <Card className="hover:shadow-lg transition-shadow">
+              <Card className="hover:shadow-lg transition-all duration-300 hover:scale-105 animate-slide-in-right" style={{animationDelay: '0.3s'}}>
                 <CardHeader>
                   <CardTitle className="flex items-center">
                     <Icon name="Layers" size={24} className="mr-3 text-primary" />
@@ -148,8 +148,8 @@ app.listen(3000);`);
             </section>
 
             {/* Interactive Playground */}
-            <section>
-              <Card className="w-full">
+            <section className="animate-fade-in-up" style={{animationDelay: '0.5s'}}>
+              <Card className="w-full animate-scale-in hover:shadow-xl transition-all duration-300">
                 <CardHeader>
                   <CardTitle className="flex items-center text-2xl">
                     <Icon name="Play" size={28} className="mr-3 text-primary" />
@@ -164,7 +164,7 @@ app.listen(3000);`);
                     <div>
                       <div className="flex items-center justify-between mb-3">
                         <h3 className="font-semibold">Ваш код</h3>
-                        <Button onClick={runCode} size="sm">
+                        <Button onClick={runCode} size="sm" className="hover:scale-105 transition-transform">
                           <Icon name="Play" size={16} className="mr-2" />
                           Запустить
                         </Button>
@@ -172,7 +172,7 @@ app.listen(3000);`);
                       <Textarea
                         value={code}
                         onChange={(e) => setCode(e.target.value)}
-                        className="min-h-[300px] font-mono text-sm resize-none"
+                        className="min-h-[300px] font-mono text-sm resize-none focus:ring-2 focus:ring-primary/20 transition-all"
                         placeholder="Введите ваш код здесь..."
                       />
                     </div>
@@ -190,7 +190,7 @@ app.listen(3000);`);
         )}
 
         {activeSection === 'examples' && (
-          <div className="space-y-8">
+          <div className="space-y-8 animate-fade-in">
             <div className="text-center">
               <h1 className="text-4xl font-bold mb-4">Примеры использования</h1>
               <p className="text-xl text-muted-foreground mb-8">
@@ -199,7 +199,7 @@ app.listen(3000);`);
             </div>
 
             <Tabs defaultValue="api" className="w-full">
-              <TabsList className="grid w-full grid-cols-4">
+              <TabsList className="grid w-full grid-cols-4 animate-fade-in">
                 <TabsTrigger value="api">REST API</TabsTrigger>
                 <TabsTrigger value="websocket">WebSocket</TabsTrigger>
                 <TabsTrigger value="database">База данных</TabsTrigger>
@@ -207,7 +207,7 @@ app.listen(3000);`);
               </TabsList>
 
               <TabsContent value="api" className="space-y-4">
-                <Card>
+                <Card className="animate-scale-in hover:shadow-xl transition-all duration-300">
                   <CardHeader>
                     <CardTitle>Простой REST API</CardTitle>
                     <div className="flex gap-2">
@@ -216,7 +216,7 @@ app.listen(3000);`);
                     </div>
                   </CardHeader>
                   <CardContent>
-                    <pre className="bg-muted p-4 rounded-lg overflow-x-auto font-mono text-sm">
+                    <pre className="bg-muted p-4 rounded-lg overflow-x-auto font-mono text-sm hover:bg-muted/80 transition-colors">
 {`import { hudra } from 'hudra';
 
 const app = hudra();
@@ -244,7 +244,7 @@ app.listen(3000);`}
               </TabsContent>
 
               <TabsContent value="websocket" className="space-y-4">
-                <Card>
+                <Card className="animate-scale-in hover:shadow-xl transition-all duration-300">
                   <CardHeader>
                     <CardTitle>Чат на WebSocket</CardTitle>
                     <div className="flex gap-2">
@@ -253,7 +253,7 @@ app.listen(3000);`}
                     </div>
                   </CardHeader>
                   <CardContent>
-                    <pre className="bg-muted p-4 rounded-lg overflow-x-auto font-mono text-sm">
+                    <pre className="bg-muted p-4 rounded-lg overflow-x-auto font-mono text-sm hover:bg-muted/80 transition-colors">
 {`import { hudra, ws } from 'hudra';
 
 const app = hudra();
@@ -285,7 +285,7 @@ app.listen(3000);`}
               </TabsContent>
 
               <TabsContent value="database" className="space-y-4">
-                <Card>
+                <Card className="animate-scale-in hover:shadow-xl transition-all duration-300">
                   <CardHeader>
                     <CardTitle>Работа с базой данных</CardTitle>
                     <div className="flex gap-2">
@@ -294,7 +294,7 @@ app.listen(3000);`}
                     </div>
                   </CardHeader>
                   <CardContent>
-                    <pre className="bg-muted p-4 rounded-lg overflow-x-auto font-mono text-sm">
+                    <pre className="bg-muted p-4 rounded-lg overflow-x-auto font-mono text-sm hover:bg-muted/80 transition-colors">
 {`import { hudra, db } from 'hudra';
 
 const app = hudra();
@@ -327,7 +327,7 @@ app.listen(3000);`}
               </TabsContent>
 
               <TabsContent value="auth" className="space-y-4">
-                <Card>
+                <Card className="animate-scale-in hover:shadow-xl transition-all duration-300">
                   <CardHeader>
                     <CardTitle>JWT Авторизация</CardTitle>
                     <div className="flex gap-2">
@@ -336,7 +336,7 @@ app.listen(3000);`}
                     </div>
                   </CardHeader>
                   <CardContent>
-                    <pre className="bg-muted p-4 rounded-lg overflow-x-auto font-mono text-sm">
+                    <pre className="bg-muted p-4 rounded-lg overflow-x-auto font-mono text-sm hover:bg-muted/80 transition-colors">
 {`import { hudra, auth, jwt } from 'hudra';
 
 const app = hudra();
@@ -372,7 +372,7 @@ app.listen(3000);`}
         )}
 
         {activeSection === 'install' && (
-          <div className="space-y-8">
+          <div className="space-y-8 animate-fade-in">
             <div className="text-center">
               <h1 className="text-4xl font-bold mb-4">Установка</h1>
               <p className="text-xl text-muted-foreground mb-8">
@@ -380,8 +380,8 @@ app.listen(3000);`}
               </p>
             </div>
 
-            <div className="space-y-6">
-              <Card>
+            <div className="space-y-6 animate-fade-in-up" style={{animationDelay: '0.2s'}}>
+              <Card className="animate-scale-in hover:shadow-xl transition-all duration-300">
                 <CardHeader>
                   <CardTitle className="flex items-center">
                     <Icon name="Package" size={24} className="mr-3" />
@@ -410,7 +410,7 @@ app.listen(3000);`}
                 </CardContent>
               </Card>
 
-              <Card>
+              <Card className="animate-scale-in hover:shadow-xl transition-all duration-300">
                 <CardHeader>
                   <CardTitle className="flex items-center">
                     <Icon name="FileText" size={24} className="mr-3" />
@@ -435,7 +435,7 @@ app.listen(3000, () => {
                 </CardContent>
               </Card>
 
-              <Card>
+              <Card className="animate-scale-in hover:shadow-xl transition-all duration-300">
                 <CardHeader>
                   <CardTitle className="flex items-center">
                     <Icon name="Play" size={24} className="mr-3" />
